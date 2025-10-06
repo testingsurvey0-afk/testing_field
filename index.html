@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAF Student Mental Health Survey - Complete Version</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.4;
+            background-color: #f9f9f9;
+        }
+        .header {
+            text-align: center;
+            background-color: #2c5530;
+            color: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .sticky-progress {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .progress-container {
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .progress {
+            height: 100%;
+            background-color: #2c5530;
+            width: 0%;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+        #progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        .section {
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            margin: -20px -20px 20px -20px;
+            padding: 12px 20px;
+            color: #2c5530;
+            font-size: 16px;
+            border-radius: 8px 8px 0 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 13px;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            text-align: center;
+            font-size: 11px;
+        }
+        .scale-table th {
+            font-size: 10px;
+            padding: 6px 4px;
+            writing-mode: horizontal-tb;
+        }
+        .scale-table td {
+            padding: 8px;
+            text-align: center;
+        }
+        .scale-table td:first-child {
+            text-align: left;
+            font-size: 12px;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin: 0 3px;
+            transform: scale(1.1);
+        }
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+        .checkbox-item input {
+            margin-right: 6px;
+        }
+        .inline-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 8px 0;
+        }
+        .inline-options label {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+        }
+        .inline-options input {
+            margin-right: 5px;
+        }
+        select {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            min-width: 200px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        input[type="text"], input[type="email"], input[type="tel"] {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .time-estimate {
+            background-color: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 20px;
+            border-left: 4px solid #2c5530;
+        }
+        .crisis-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #f0ad4e;
+        }
+        .optional-section {
+            background-color: #f8f9ff;
+            border-left: 4px solid #6c63ff;
+        }
+        .critical-item {
+            background-color: #ffebee !important;
+        }
+        .reverse-score {
+            background-color: #e8f5e8 !important;
+        }
+        .compact-row td {
+            padding: 5px 8px;
+        }
+        .question-group {
+            margin-bottom: 15px;
+        }
+        .sub-question {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+        
+        /* New styles for improvements */
+        .intro-section, .consent-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .consent-checkbox {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .submit-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .submit-btn {
+            background-color: #2c5530;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #1a3a1d;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .crisis-resources {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .crisis-resources h3 {
+            margin-top: 0;
+            color: #2c5530;
+        }
+        
+        /* Focus styles for accessibility */
+        input[type="radio"]:focus,
+        input[type="checkbox"]:focus,
+        select:focus,
+        textarea:focus,
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus {
+            outline: 2px solid #2c5530;
+            outline-offset: 2px;
+        }
+		.footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+			text-align: center;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .inline-options {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            .scale-table th {
+                font-size: 9px;
+                padding: 4px 2px;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .header h2 {
+                font-size: 20px;
+            }
+            
+            .header h3 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>University of Agriculture Faisalabad</h2>
+        <h3>Student Mental Health & Well-being Survey</h3>
+        <p><strong>Conducted by:</strong> Society for Mental Welfare, UAF</p>
+        <p><strong>Purpose:</strong> Understand student mental health needs and improve support services</p>
+    </div>
+
+    <div class="intro-section">
+        <h3>About This Survey</h3>
+        <p>This survey is designed to help us understand the mental health needs of UAF students. Your participation is completely voluntary and anonymous. The survey includes standardized assessment tools (GAD-7, PHQ-9, PSS-10) that help measure anxiety, depression, and stress levels.</p>
+        
+        <div class="crisis-notice">
+            <strong>Please note:</strong> If you are experiencing thoughts of self-harm, please reach out to the UAF Counseling Center or a trusted individual immediately. Help is available.
+        </div>
+    </div>
+<!--
+    <div class="consent-section">
+        <h3>Informed Consent</h3>
+        <p>By proceeding with this survey, you confirm that:</p>
+        <ul>
+            <li>You are participating voluntarily</li>
+            <li>You understand your responses are anonymous</li>
+            <li>You are at least 18 years old</li>
+            <li>You understand you can skip any question you're not comfortable answering</li>
+        </ul>
+        
+        <div class="consent-checkbox">
+            <input type="checkbox" id="consent" name="consent" required>
+            <label for="consent">I consent to participate in this survey</label>
+        </div>
+    </div> -->
+	
+	<div class="consent-section" style="background-color: #e8f5e8; border-left: 4px solid #2c5530; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <h3 style="color: #2c5530; margin-top: 0; border-bottom: 2px solid #2c5530; padding-bottom: 10px;">Informed Consent</h3>
+    <p style="margin-bottom: 15px; font-weight: bold;">By proceeding with this survey, you confirm that:</p>
+    <ul style="margin-bottom: 20px; padding-left: 20px;">
+        <li style="margin-bottom: 8px;">You are participating voluntarily</li>
+        <li style="margin-bottom: 8px;">You understand your responses are anonymous</li>
+        <li style="margin-bottom: 8px;">You are at least 18 years old</li>
+        <!--<li style="margin-bottom: 8px;">You understand you can skip any question you're not comfortable answering</li> -->
+    </ul>
+    
+    <div class="consent-checkbox" style="background-color: white; padding: 15px; border-radius: 5px; border: 2px solid #2c5530;">
+        <input type="checkbox" id="consent" name="consent" required style="transform: scale(1.3); margin-right: 12px;">
+        <label for="consent" style="font-weight: bold; color: #2c5530; font-size: 16px;">I consent to participate in this survey</label>
+    </div>
+    <div style="font-size: 12px; color: #666; margin-top: 8px; font-style: italic;">
+        You must provide consent to continue with the survey
+    </div>
+	</div> 
+	
+    <div class="sticky-progress">
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="survey-progress"></div>
+            </div>
+            <p id="progress-text">Section 1 of 13</p>
+        </div>
+    </div>
+
+
+    <div class="time-estimate">
+        <strong>Estimated Time: 10-15 minutes</strong> | All responses are anonymous and confidential
+    </div>
+
+    <!form method="POST" action="https://script.google.com/macros/s/AKfycbxhgbDGodyOl4DPApD0T2ONMdhNjXJLdwEHUfEipPX2tAo_dhVojyOQ5t52iYLJDsNC/exec" id="mental-health-survey">
+	<!form method="POST" action="https://script.google.com/macros/s/AKfycbwrjlz5TXJTS6cnHYnbOudiL3W5Dq0XCxjxVPQmT11Ckq6QWYeWP7-qS4otmOmvg9GTdQ/exec" id="mental-health-survey">
+	<form method="POST" action="https://script.google.com/macros/s/AKfycbxXAkmpqUqMOCNrEjlm0Z-LLEdSRNd5ozLs4qp7GTlvXf58fjxL4lpVrK9dwj4YPkyh/exec" id="mental-health-survey">
+        <!-- Hidden fields for metadata -->
+        <input type="hidden" name="consent_given" id="consent_given" value="No">
+        <input type="hidden" name="consent_timestamp" id="consent_timestamp">
+        <input type="hidden" name="start_time" id="start_time">
+        <input type="hidden" name="end_time" id="end_time">
+        <input type="hidden" name="time_taken_seconds" id="time_taken_seconds">
+        <!-- <input type="hidden" name="user_ip" id="user_ip"> -->
+        <input type="hidden" name="submission_timestamp" id="submission_timestamp">
+
+    <!-- SECTION A: BASIC INFORMATION -->
+    <div class="section" role="region" aria-labelledby="section-a-title">
+        <h2 id="section-a-title" class="section-title">SECTION A: BASIC INFORMATION</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 25%;"><label for="faculty"><strong>A1. Faculty:</strong></label></td>
+                <td>
+                    <select id="faculty" name="faculty" required>
+                        <option value="">Select your faculty...</option>
+                        <option value="Faculty of Agricultural Engineering & Technology">Faculty of Agricultural Engineering & Technology</option>
+                        <option value="Faculty of Agriculture">Faculty of Agriculture</option>
+                        <option value="Faculty of Animal Husbandry">Faculty of Animal Husbandry</option>
+                        <option value="Faculty of Food, Nutrition & Home Sciences">Faculty of Food, Nutrition & Home Sciences</option>
+                        <option value="Faculty of Veterinary Science">Faculty of Veterinary Science</option>
+                        <option value="Faculty of Sciences">Faculty of Sciences</option>
+                        <option value="Institute of Business & Management Sciences">Institute of Business & Management Sciences</option>
+                        <option value="College of Engineering">College of Engineering</option>
+                        <option value="Department of Computer Science">Department of Computer Science</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" id="faculty_other" name="faculty_other" placeholder="Please specify..." style="width: 200px; margin-left: 10px; display: none;">
+                    <span class="error-message" id="faculty-error">Please select your faculty</span>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 25%;"><label for="academic_level"><strong>A2. Academic Level:</strong></label></td>
+                <td>
+                    <select id="academic_level" name="academic_level" required>
+                        <option value="">Select your level...</option>
+                        <option value="1st Semester">1st Semester</option>
+                        <option value="2nd Semester">2nd Semester</option>
+                        <option value="3rd Semester">3rd Semester</option>
+                        <option value="4th Semester">4th Semester</option>
+                        <option value="5th Semester">5th Semester</option>
+                        <option value="6th Semester">6th Semester</option>
+                        <option value="7th Semester">7th Semester</option>
+                        <option value="8th Semester">8th Semester</option>
+                        <option value="9th Semester">9th Semester</option>
+                        <option value="10th Semester">10th Semester</option>
+                        <option value="Masters">Masters</option>
+                        <option value="PhD">PhD</option>
+                    </select>
+                    <span class="error-message" id="academic-level-error">Please select your academic level</span>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 25%;"><strong>A3. Age:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="age" value="17-19 years" required>17-19 years</label>
+                    <label><input type="radio" name="age" value="20-22 years">20-22 years</label>
+                    <label><input type="radio" name="age" value="23-25 years">23-25 years</label>
+                    <label><input type="radio" name="age" value="26+ years">26+ years</label>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>A4. Gender:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="gender" value="Male" required>Male</label>
+                    <label><input type="radio" name="gender" value="Female">Female</label>
+                    <label><input type="radio" name="gender" value="Prefer not to say">Prefer not to say</label>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>A5. Current Living:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="living" value="University hostel/dormitory">University hostel/dormitory</label>
+                    <label><input type="radio" name="living" value="Rented accommodation near campus">Rented accommodation near campus</label>
+                    <label><input type="radio" name="living" value="With family in Faisalabad">With family in Faisalabad</label>
+                    <label><input type="radio" name="living" value="Commute from home (outside Faisalabad)">Commute from home (outside Faisalabad)</label>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>A6. Originally from Faisalabad:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="origin" value="Yes, born and raised here">Yes, born and raised here</label>
+                    <label><input type="radio" name="origin" value="No, moved for studies">No, moved for studies</label>
+                    <label><input type="radio" name="origin" value="From nearby city/district">From nearby city/district</label>
+                    <label><input type="radio" name="origin" value="From different province">From different province</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 25%;"><strong>A7. Current CGPA/GPA:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="cgpa" value="3.5-4.0 (Excellent)">3.5-4.0 (Excellent)</label>
+                    <label><input type="radio" name="cgpa" value="3.0-3.49 (Good)">3.0-3.49 (Good)</label>
+                    <label><input type="radio" name="cgpa" value="2.5-2.99 (Average)">2.5-2.99 (Average)</label>
+                    <label><input type="radio" name="cgpa" value="2.0-2.49 (Below Average)">2.0-2.49 (Below Average)</label>
+                    <label><input type="radio" name="cgpa" value="Below 2.0">Below 2.0</label>
+                    <label><input type="radio" name="cgpa" value="Don't know/Prefer not to say">Don't know/Prefer not to say</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 25%;"><strong>A8. Financial stress frequency:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="financial_stress" value="Very often">Very often</label>
+                    <label><input type="radio" name="financial_stress" value="Sometimes">Sometimes</label>
+                    <label><input type="radio" name="financial_stress" value="Rarely">Rarely</label>
+                    <label><input type="radio" name="financial_stress" value="Never">Never</label>
+                    <label><input type="radio" name="financial_stress" value="Prefer not to say">Prefer not to say</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 25%;"><strong>A9. Father's education:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="father_edu" value="No formal education">No formal education</label>
+                    <label><input type="radio" name="father_edu" value="Primary">Primary</label>
+                    <label><input type="radio" name="father_edu" value="Matriculation">Matriculation</label>
+                    <label><input type="radio" name="father_edu" value="Intermediate">Intermediate</label>
+                    <label><input type="radio" name="father_edu" value="Bachelor's">Bachelor's</label>
+                    <label><input type="radio" name="father_edu" value="Master's or higher">Master's or higher</label>
+                    <label><input type="radio" name="father_edu" value="Don't know">Don't know</label>
+                    <label><input type="radio" name="father_edu" value="Prefer not to say">Prefer not to say</label>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>A10. Mother's education:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="mother_edu" value="No formal education">No formal education</label>
+                    <label><input type="radio" name="mother_edu" value="Primary">Primary</label>
+                    <label><input type="radio" name="mother_edu" value="Matriculation">Matriculation</label>
+                    <label><input type="radio" name="mother_edu" value="Intermediate">Intermediate</label>
+                    <label><input type="radio" name="mother_edu" value="Bachelor's">Bachelor's</label>
+                    <label><input type="radio" name="mother_edu" value="Master's or higher">Master's or higher</label>
+                    <label><input type="radio" name="mother_edu" value="Don't know">Don't know</label>
+                    <label><input type="radio" name="mother_edu" value="Prefer not to say">Prefer not to say</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION B: GAD-7 ANXIETY ASSESSMENT -->
+    <div class="section" role="region" aria-labelledby="section-b-title">
+        <h2 id="section-b-title" class="section-title">SECTION B: ANXIETY ASSESSMENT (GAD-7)</h2>
+        <p><em>Over the last 2 weeks, how often have you been bothered by the following problems?</em></p>
+        
+        <table class="scale-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Problem</th>
+                    <th>Not at all<br>(0)</th>
+                    <th>Several<br>days (1)</th>
+                    <th>More than<br>half days (2)</th>
+                    <th>Nearly<br>every day (3)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>B1. Feeling nervous, anxious, or on edge</td>
+                    <td><input type="radio" name="gad1" value="0 - Not at all"></td>
+                    <td><input type="radio" name="gad1" value="1 - Several days"></td>
+                    <td><input type="radio" name="gad1" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="gad1" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>B2. Not being able to stop or control worrying</td>
+                    <td><input type="radio" name="gad2" value="0 - Not at all"></td>
+                    <td><input type="radio" name="gad2" value="1 - Several days"></td>
+                    <td><input type="radio" name="gad2" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="gad2" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>B3. Worrying too much about different things</td>
+                    <td><input type="radio" name="gad3" value="0 - Not at all"></td>
+                    <td><input type="radio" name="gad3" value="1 - Several days"></td>
+                    <td><input type="radio" name="gad3" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="gad3" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>B4. Trouble relaxing</td>
+                    <td><input type="radio" name="gad4" value="0 - Not at all"></td>
+                    <td><input type="radio" name="gad4" value="1 - Several days"></td>
+                    <td><input type="radio" name="gad4" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="gad4" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>B5. Being so restless that it's hard to sit still</td>
+                    <td><input type="radio" name="gad5" value="0 - Not at all"></td>
+                    <td><input type="radio" name="gad5" value="1 - Several days"></td>
+                    <td><input type="radio" name="gad5" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="gad5" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>B6. Becoming easily annoyed or irritable</td>
+                    <td><input type="radio" name="gad6" value="0 - Not at all"></td>
+                    <td><input type="radio" name="gad6" value="1 - Several days"></td>
+                    <td><input type="radio" name="gad6" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="gad6" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>B7. Feeling afraid as if something awful might happen</td>
+                    <td><input type="radio" name="gad7" value="0 - Not at all"></td>
+                    <td><input type="radio" name="gad7" value="1 - Several days"></td>
+                    <td><input type="radio" name="gad7" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="gad7" value="3 - Nearly every day"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECTION C: PHQ-9 DEPRESSION ASSESSMENT -->
+    <div class="section" role="region" aria-labelledby="section-c-title">
+        <h2 id="section-c-title" class="section-title">SECTION C: DEPRESSION ASSESSMENT (PHQ-9)</h2>
+        <p><em>Over the last 2 weeks, how often have you been bothered by any of the following problems?</em></p>
+        
+        <table class="scale-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Problem</th>
+                    <th>Not at all<br>(0)</th>
+                    <th>Several<br>days (1)</th>
+                    <th>More than<br>half days (2)</th>
+                    <th>Nearly<br>every day (3)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>C1. Little interest or pleasure in doing things</td>
+                    <td><input type="radio" name="phq1" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq1" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq1" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq1" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>C2. Feeling down, depressed, or hopeless</td>
+                    <td><input type="radio" name="phq2" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq2" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq2" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq2" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>C3. Trouble falling or staying asleep, or sleeping too much</td>
+                    <td><input type="radio" name="phq3" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq3" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq3" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq3" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>C4. Feeling tired or having little energy</td>
+                    <td><input type="radio" name="phq4" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq4" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq4" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq4" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>C5. Poor appetite or overeating</td>
+                    <td><input type="radio" name="phq5" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq5" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq5" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq5" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>C6. Feeling bad about yourself or that you are a failure or have let yourself or your family down</td>
+                    <td><input type="radio" name="phq6" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq6" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq6" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq6" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>C7. Trouble concentrating on things, such as reading or watching television</td>
+                    <td><input type="radio" name="phq7" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq7" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq7" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq7" value="3 - Nearly every day"></td>
+                </tr>
+                <tr>
+                    <td>C8. Moving or speaking slowly that other people could have noticed. Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual</td>
+                    <td><input type="radio" name="phq8" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq8" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq8" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq8" value="3 - Nearly every day"></td>
+                </tr>
+                <tr class="critical-item">
+                    <td><strong>C9. Thoughts that you would be better off dead, or of hurting yourself</strong></td>
+                    <td><input type="radio" name="phq9" value="0 - Not at all"></td>
+                    <td><input type="radio" name="phq9" value="1 - Several days"></td>
+                    <td><input type="radio" name="phq9" value="2 - More than half the days"></td>
+                    <td><input type="radio" name="phq9" value="3 - Nearly every day"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="crisis-resources" id="crisis-resources">
+            <h3>Crisis Support Resources</h3>
+            <ul>
+                <li><strong>Society For Mental Welfare (UAF):</strong> +92 317-6288859</li>
+                <li><strong>Crisis Helpline:</strong> 1166</li>
+                <li><strong>National Youth Helpline (Toll-Free By HEC):</strong> 0800-69457</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SECTION D: PSS-10 STRESS ASSESSMENT -->
+    <div class="section" role="region" aria-labelledby="section-d-title">
+        <h2 id="section-d-title" class="section-title">SECTION D: STRESS ASSESSMENT (PSS-10)</h2>
+        <p><em>In the last month, how often have you felt or thought the following?</em></p>
+        
+        <table class="scale-table">
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Feeling/Thought</th>
+                    <th>Never<br>(0)</th>
+                    <th>Almost<br>never (1)</th>
+                    <th>Some-<br>times (2)</th>
+                    <th>Fairly<br>often (3)</th>
+                    <th>Very<br>often (4)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>D1. Upset because of something that happened unexpectedly</td>
+                    <td><input type="radio" name="pss1" value="0 - Never"></td>
+                    <td><input type="radio" name="pss1" value="1 - Almost never"></td>
+                    <td><input type="radio" name="pss1" value="2 - Sometimes"></td>
+                    <td><input type="radio" name="pss1" value="3 - Fairly often"></td>
+                    <td><input type="radio" name="pss1" value="4 - Very often"></td>
+                </tr>
+                <tr>
+                    <td>D2. Unable to control the important things in your life</td>
+                    <td><input type="radio" name="pss2" value="0 - Never"></td>
+                    <td><input type="radio" name="pss2" value="1 - Almost never"></td>
+                    <td><input type="radio" name="pss2" value="2 - Sometimes"></td>
+                    <td><input type="radio" name="pss2" value="3 - Fairly often"></td>
+                    <td><input type="radio" name="pss2" value="4 - Very often"></td>
+                </tr>
+                <tr>
+                    <td>D3. Felt nervous and stressed</td>
+                    <td><input type="radio" name="pss3" value="0 - Never"></td>
+                    <td><input type="radio" name="pss3" value="1 - Almost never"></td>
+                    <td><input type="radio" name="pss3" value="2 - Sometimes"></td>
+                    <td><input type="radio" name="pss3" value="3 - Fairly often"></td>
+                    <td><input type="radio" name="pss3" value="4 - Very often"></td>
+                </tr>
+                <tr class="reverse-score">
+                    <td>D4. Confident about your ability to handle your personal problems</td>
+                    <td><input type="radio" name="pss4" value="4 - Never (Reverse)"></td>
+                    <td><input type="radio" name="pss4" value="3 - Almost never (Reverse)"></td>
+                    <td><input type="radio" name="pss4" value="2 - Sometimes (Reverse)"></td>
+                    <td><input type="radio" name="pss4" value="1 - Fairly often (Reverse)"></td>
+                    <td><input type="radio" name="pss4" value="0 - Very often (Reverse)"></td>
+                </tr>
+                <tr class="reverse-score">
+                    <td>D5. Felt that things were going your way</td>
+                    <td><input type="radio" name="pss5" value="4 - Never (Reverse)"></td>
+                    <td><input type="radio" name="pss5" value="3 - Almost never (Reverse)"></td>
+                    <td><input type="radio" name="pss5" value="2 - Sometimes (Reverse)"></td>
+                    <td><input type="radio" name="pss5" value="1 - Fairly often (Reverse)"></td>
+                    <td><input type="radio" name="pss5" value="0 - Very often (Reverse)"></td>
+                </tr>
+                <tr>
+                    <td>D6. Could not cope with all the things that you had to do</td>
+                    <td><input type="radio" name="pss6" value="0 - Never"></td>
+                    <td><input type="radio" name="pss6" value="1 - Almost never"></td>
+                    <td><input type="radio" name="pss6" value="2 - Sometimes"></td>
+                    <td><input type="radio" name="pss6" value="3 - Fairly often"></td>
+                    <td><input type="radio" name="pss6" value="4 - Very often"></td>
+                </tr>
+                <tr class="reverse-score">
+                    <td>D7. Able to control irritations in your life</td>
+                    <td><input type="radio" name="pss7" value="4 - Never (Reverse)"></td>
+                    <td><input type="radio" name="pss7" value="3 - Almost never (Reverse)"></td>
+                    <td><input type="radio" name="pss7" value="2 - Sometimes (Reverse)"></td>
+                    <td><input type="radio" name="pss7" value="1 - Fairly often (Reverse)"></td>
+                    <td><input type="radio" name="pss7" value="0 - Very often (Reverse)"></td>
+                </tr>
+                <tr class="reverse-score">
+                    <td>D8. Felt that you were on top of things</td>
+                    <td><input type="radio" name="pss8" value="4 - Never (Reverse)"></td>
+                    <td><input type="radio" name="pss8" value="3 - Almost never (Reverse)"></td>
+                    <td><input type="radio" name="pss8" value="2 - Sometimes (Reverse)"></td>
+                    <td><input type="radio" name="pss8" value="1 - Fairly often (Reverse)"></td>
+                    <td><input type="radio" name="pss8" value="0 - Very often (Reverse)"></td>
+                </tr>
+                <tr>
+                    <td>D9. Angered because of things that happened that were outside of your control</td>
+                    <td><input type="radio" name="pss9" value="0 - Never"></td>
+                    <td><input type="radio" name="pss9" value="1 - Almost never"></td>
+                    <td><input type="radio" name="pss9" value="2 - Sometimes"></td>
+                    <td><input type="radio" name="pss9" value="3 - Fairly often"></td>
+                    <td><input type="radio" name="pss9" value="4 - Very often"></td>
+                </tr>
+                <tr>
+                    <td>D10. Difficulties were piling up so high that you could not overcome them</td>
+                    <td><input type="radio" name="pss10" value="0 - Never"></td>
+                    <td><input type="radio" name="pss10" value="1 - Almost never"></td>
+                    <td><input type="radio" name="pss10" value="2 - Sometimes"></td>
+                    <td><input type="radio" name="pss10" value="3 - Fairly often"></td>
+                    <td><input type="radio" name="pss10" value="4 - Very often"></td>
+                </tr>
+            </tbody>
+        </table>
+        <small><em>Note: Green highlighted items (D4, D5, D7, D8) are reverse-scored</em></small>
+    </div>
+
+    <!-- SECTION E: ACADEMIC & SOCIAL STRESSORS -->
+    <div class="section" role="region" aria-labelledby="section-e-title">
+        <h2 id="section-e-title" class="section-title">SECTION E: ACADEMIC & SOCIAL STRESSORS</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>E1. Which cause you the most stress? (Select top 3)</strong></td>
+                <td>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Academic workload/assignments">Academic workload/assignments</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Examination pressure">Examination pressure</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Financial difficulties">Financial difficulties</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Career uncertainty after graduation">Career uncertainty after graduation</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Family expectations/pressure">Family expectations/pressure</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Social relationships/friendships">Social relationships/friendships</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Romantic relationships">Romantic relationships</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Living away from home">Living away from home</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Competition with classmates">Competition with classmates</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Faculty/teacher relationships">Faculty/teacher relationships</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Health problems">Health problems</div>
+                        <div class="checkbox-item"><input type="checkbox" name="stressors[]" value="Future job prospects">Future job prospects</div>
+                    </div>
+                    <span class="error-message" id="stressors-error">Please select exactly 3 stressors</span>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>E2. Most stressful periods:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="stress_period" value="Beginning of semester">Beginning of semester</label>
+                    <label><input type="radio" name="stress_period" value="Mid-semester exams">Mid-semester exams</label>
+                    <label><input type="radio" name="stress_period" value="Final exams period">Final exams period</label>
+                    <label><input type="radio" name="stress_period" value="Assignment submission deadlines">Assignment submission deadlines</label>
+                    <label><input type="radio" name="stress_period" value="Job/internship application periods">Job/internship application periods</label>
+                    <label><input type="radio" name="stress_period" value="Family visits/holidays">Family visits/holidays</label>
+                    <label><input type="radio" name="stress_period" value="Consistently throughout the semester">Consistently throughout the semester</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>E3. Stress affects academic performance:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="stress_academic_impact" value="Never">Never</label>
+                    <label><input type="radio" name="stress_academic_impact" value="Rarely">Rarely</label>
+                    <label><input type="radio" name="stress_academic_impact" value="Sometimes">Sometimes</label>
+                    <label><input type="radio" name="stress_academic_impact" value="Often">Often</label>
+                    <label><input type="radio" name="stress_academic_impact" value="Always">Always</label>
+                </td>
+            </tr>
+        
+            <tr>
+                <td><strong>E4. Overall life satisfaction:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="life_satisfaction" value="Very satisfied">Very satisfied</label>
+                    <label><input type="radio" name="life_satisfaction" value="Satisfied">Satisfied</label>
+                    <label><input type="radio" name="life_satisfaction" value="Neutral">Neutral</label>
+                    <label><input type="radio" name="life_satisfaction" value="Dissatisfied">Dissatisfied</label>
+                    <label><input type="radio" name="life_satisfaction" value="Very dissatisfied">Very dissatisfied</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION F: SUPPORT SYSTEMS & HELP-SEEKING -->
+    <div class="section" role="region" aria-labelledby="section-f-title">
+        <h2 id="section-f-title" class="section-title">SECTION F: SUPPORT SYSTEMS & HELP-SEEKING</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>F1. Aware UAF provides counseling/mental health services:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="uaf_services_awareness" value="Yes, fully aware">Yes, fully aware</label>
+                    <label><input type="radio" name="uaf_services_awareness" value="Somewhat aware">Somewhat aware</label>
+                    <label><input type="radio" name="uaf_services_awareness" value="Not sure what services are available">Not sure what services are available</label>
+                    <label><input type="radio" name="uaf_services_awareness" value="No, not aware at all">No, not aware at all</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>F2. Ever used mental health/counseling services:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="services_used" value="Yes, at UAF">Yes, at UAF</label>
+                    <label><input type="radio" name="services_used" value="Yes, outside UAF">Yes, outside UAF</label>
+                    <label><input type="radio" name="services_used" value="No, but I have considered it">No, but I have considered it</label>
+                    <label><input type="radio" name="services_used" value="No, never considered it">No, never considered it</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>F3. What prevents seeking mental health support? (Select all that apply)</strong></td>
+                <td>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Nothing prevents me">Nothing prevents me</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Fear of stigma/judgment from others">Fear of stigma/judgment from others</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Don't know where to find help">Don't know where to find help</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Cost of services">Cost of services</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Lack of time">Lack of time</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Don't think it would help">Don't think it would help</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Family wouldn't approve">Family wouldn't approve</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Prefer to handle problems myself">Prefer to handle problems myself</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Language barriers">Language barriers</div>
+                        <div class="checkbox-item"><input type="checkbox" name="barriers[]" value="Don't trust counselors/therapists">Don't trust counselors/therapists</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>F4. Comfort discussing mental health with:</strong></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="sub-question">Friends/Classmates:</td>
+                <td class="inline-options">
+                    <label><input type="radio" name="comfort_friends" value="Very comfortable">Very comfortable</label>
+                    <label><input type="radio" name="comfort_friends" value="Somewhat comfortable">Somewhat comfortable</label>
+                    <label><input type="radio" name="comfort_friends" value="Not very comfortable">Not very comfortable</label>
+                    <label><input type="radio" name="comfort_friends" value="Not comfortable at all">Not comfortable at all</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="sub-question">Family members:</td>
+                <td class="inline-options">
+                    <label><input type="radio" name="comfort_family" value="Very comfortable">Very comfortable</label>
+                    <label><input type="radio" name="comfort_family" value="Somewhat comfortable">Somewhat comfortable</label>
+                    <label><input type="radio" name="comfort_family" value="Not very comfortable">Not very comfortable</label>
+                    <label><input type="radio" name="comfort_family" value="Not comfortable at all">Not comfortable at all</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="sub-question">Teachers/Faculty:</td>
+                <td class="inline-options">
+                    <label><input type="radio" name="comfort_faculty" value="Very comfortable">Very comfortable</label>
+                    <label><input type="radio" name="comfort_faculty" value="Somewhat comfortable">Somewhat comfortable</label>
+                    <label><input type="radio" name="comfort_faculty" value="Not very comfortable">Not very comfortable</label>
+                    <label><input type="radio" name="comfort_faculty" value="Not comfortable at all">Not comfortable at all</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>F5. Most helpful mental health support type: (Select top 2)</strong></td>
+                <td>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Individual counseling sessions">Individual counseling sessions</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Group therapy/discussion sessions">Group therapy/discussion sessions</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Peer support groups">Peer support groups</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Online resources/apps">Online resources/apps</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Workshops on stress management">Workshops on stress management</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Mental health awareness seminars">Mental health awareness seminars</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Crisis helpline/hotline">Crisis helpline/hotline</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Family counseling sessions">Family counseling sessions</div>
+                        <div class="checkbox-item"><input type="checkbox" name="support_types[]" value="Religious/spiritual counseling">Religious/spiritual counseling</div>
+                    </div>
+                    <span class="error-message" id="support-types-error">Please select exactly 2 support types</span>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>F6. Preferred language for mental health support:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="preferred_language" value="Urdu">Urdu</label>
+                    <label><input type="radio" name="preferred_language" value="English">English</label>
+                    <label><input type="radio" name="preferred_language" value="Punjabi">Punjabi</label>
+                    <label><input type="radio" name="preferred_language" value="Other">Other</label>
+                </td>
+            </tr>
+        </table>
+        <div id="language_other" style="display: none; margin-top: 10px;">
+            <input type="text" name="language_other_specify" placeholder="Please specify language..." style="width: 200px;">
+        </div>
+    </div>
+
+    <!-- SECTION G: LIFESTYLE & COPING STRATEGIES -->
+    <div class="section" role="region" aria-labelledby="section-g-title">
+        <h2 id="section-g-title" class="section-title">SECTION G: LIFESTYLE & COPING STRATEGIES</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>G1. Hours of sleep per night:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="sleep_hours" value="Less than 4 hours">Less than 4 hours</label>
+                    <label><input type="radio" name="sleep_hours" value="4-5 hours">4-5 hours</label>
+                    <label><input type="radio" name="sleep_hours" value="6-7 hours">6-7 hours</label>
+                    <label><input type="radio" name="sleep_hours" value="8-9 hours">8-9 hours</label>
+                    <label><input type="radio" name="sleep_hours" value="More than 9 hours">More than 9 hours</label>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>G2. Physical exercise frequency:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="exercise_frequency" value="Daily">Daily</label>
+                    <label><input type="radio" name="exercise_frequency" value="3-4 times per week">3-4 times per week</label>
+                    <label><input type="radio" name="exercise_frequency" value="1-2 times per week">1-2 times per week</label>
+                    <label><input type="radio" name="exercise_frequency" value="Once a month">Once a month</label>
+                    <label><input type="radio" name="exercise_frequency" value="Never">Never</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>G3. Current stress management methods: (Select all that apply)</strong></td>
+                <td>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Talk to friends/family">Talk to friends/family</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Physical exercise/sports">Physical exercise/sports</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Listen to music">Listen to music</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Watch movies/TV shows">Watch movies/TV shows</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Social media browsing">Social media browsing</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Reading books">Reading books</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Religious practices/prayer">Religious practices/prayer</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Meditation or relaxation techniques">Meditation or relaxation techniques</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Hobbies (art, crafts, etc.)">Hobbies (art, crafts, etc.)</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Sleep more">Sleep more</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Eat comfort food">Eat comfort food</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Nothing specific">Nothing specific</div>
+                        <div class="checkbox-item"><input type="checkbox" name="coping_methods[]" value="Other">Other</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div id="coping_other" style="display: none; margin-top: 10px;">
+            <input type="text" name="coping_other_specify" placeholder="Please specify other coping method..." style="width: 300px;">
+        </div>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>G4. Satisfaction with current social support system:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="social_support_satisfaction" value="Very satisfied">Very satisfied</label>
+                    <label><input type="radio" name="social_support_satisfaction" value="Satisfied">Satisfied</label>
+                    <label><input type="radio" name="social_support_satisfaction" value="Neutral">Neutral</label>
+                    <label><input type="radio" name="social_support_satisfaction" value="Dissatisfied">Dissatisfied</label>
+                    <label><input type="radio" name="social_support_satisfaction" value="Very dissatisfied">Very dissatisfied</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION H: MENTAL HEALTH AWARENESS & ATTITUDES -->
+    <div class="section" role="region" aria-labelledby="section-h-title">
+        <h2 id="section-h-title" class="section-title">SECTION H: MENTAL HEALTH AWARENESS & ATTITUDES</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H1. Knowledge about mental health issues:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="mental_health_knowledge" value="Very knowledgeable">Very knowledgeable</label>
+                    <label><input type="radio" name="mental_health_knowledge" value="Somewhat knowledgeable">Somewhat knowledgeable</label>
+                    <label><input type="radio" name="mental_health_knowledge" value="Limited knowledge">Limited knowledge</label>
+                    <label><input type="radio" name="mental_health_knowledge" value="Very little knowledge">Very little knowledge</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H2. Mental health problems are:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="mental_health_beliefs" value="Real medical conditions that need treatment">Real medical conditions that need treatment</label>
+                    <label><input type="radio" name="mental_health_beliefs" value="Temporary problems that people can overcome on their own">Temporary problems that people can overcome on their own</label>
+                    <label><input type="radio" name="mental_health_beliefs" value="Signs of personal weakness">Signs of personal weakness</label>
+                    <label><input type="radio" name="mental_health_beliefs" value="Not sure/Mixed feelings">Not sure/Mixed feelings</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H3. Likelihood to seek professional help if experiencing mental health problems:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="help_seeking_likelihood" value="Very likely">Very likely</label>
+                    <label><input type="radio" name="help_seeking_likelihood" value="Somewhat likely">Somewhat likely</label>
+                    <label><input type="radio" name="help_seeking_likelihood" value="Not very likely">Not very likely</label>
+                    <label><input type="radio" name="help_seeking_likelihood" value="Not likely at all">Not likely at all</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H4. Interest in mental health awareness activities by Society for Mental Welfare:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="activities_interest" value="Very interested">Very interested</label>
+                    <label><input type="radio" name="activities_interest" value="Somewhat interested">Somewhat interested</label>
+                    <label><input type="radio" name="activities_interest" value="Not very interested">Not very interested</label>
+                    <label><input type="radio" name="activities_interest" value="Not interested at all">Not interested at all</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H5. Most interested activities: (Select all that apply)</strong></td>
+                <td>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Mental health awareness workshops">Mental health awareness workshops</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Stress management sessions">Stress management sessions</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Peer support groups">Peer support groups</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Mindfulness/meditation sessions">Mindfulness/meditation sessions</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Physical wellness activities (yoga, sports)">Physical wellness activities (yoga, sports)</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Career counseling sessions">Career counseling sessions</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Study skills workshops">Study skills workshops</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Social events to build friendships">Social events to build friendships</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Online mental health resources">Online mental health resources</div>
+                        <div class="checkbox-item"><input type="checkbox" name="activity_preferences[]" value="Guest lectures by mental health professionals">Guest lectures by mental health professionals</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H6. Best time for mental health workshops:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="workshop_time" value="Morning (8am-11am)">Morning (8am-11am)</label>
+                    <label><input type="radio" name="workshop_time" value="Lunch time (12pm-2pm)">Lunch time (12pm-2pm)</label>
+                    <label><input type="radio" name="workshop_time" value="Afternoon (3pm-5pm)">Afternoon (3pm-5pm)</label>
+                    <label><input type="radio" name="workshop_time" value="Evening (6pm-8pm)">Evening (6pm-8pm)</label>
+                    <label><input type="radio" name="workshop_time" value="Weekend only">Weekend only</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H7. What would make it easier to attend support activities:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="attendance_facilitators" value="Convenient timing">Convenient timing</label>
+                    <label><input type="radio" name="attendance_facilitators" value="Anonymous participation">Anonymous participation</label>
+                    <label><input type="radio" name="attendance_facilitators" value="Friend/peer accompaniment">Friend/peer accompaniment</label>
+                    <label><input type="radio" name="attendance_facilitators" value="Light refreshments provided">Light refreshments provided</label>
+                    <label><input type="radio" name="attendance_facilitators" value="Academic credit/recognition">Academic credit/recognition</label>
+                    <label><input type="radio" name="attendance_facilitators" value="Nothing would help">Nothing would help</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>H8. If you needed mental health support RIGHT NOW, what would be most helpful:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="immediate_help" value="Someone to talk to immediately">Someone to talk to immediately</label>
+                    <label><input type="radio" name="immediate_help" value="Information about professional help">Information about professional help</label>
+                    <label><input type="radio" name="immediate_help" value="Stress management techniques">Stress management techniques</label>
+                    <label><input type="radio" name="immediate_help" value="Academic accommodation support">Academic accommodation support</label>
+                    <label><input type="radio" name="immediate_help" value="Financial counseling">Financial counseling</label>
+                    <label><input type="radio" name="immediate_help" value="Family support resources">Family support resources</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION J: ACADEMIC & HEALTH FACTORS -->
+    <div class="section" role="region" aria-labelledby="section-j-title">
+        <h2 id="section-j-title" class="section-title">SECTION J: ACADEMIC & HEALTH FACTORS</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>J1. Satisfaction with academic performance:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="academic_satisfaction" value="Very satisfied">Very satisfied</label>
+                    <label><input type="radio" name="academic_satisfaction" value="Satisfied">Satisfied</label>
+                    <label><input type="radio" name="academic_satisfaction" value="Neutral">Neutral</label>
+                    <label><input type="radio" name="academic_satisfaction" value="Dissatisfied">Dissatisfied</label>
+                    <label><input type="radio" name="academic_satisfaction" value="Very dissatisfied">Very dissatisfied</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>J2. Confidence about completing degree successfully:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="degree_confidence" value="Very confident">Very confident</label>
+                    <label><input type="radio" name="degree_confidence" value="Confident">Confident</label>
+                    <label><input type="radio" name="degree_confidence" value="Somewhat confident">Somewhat confident</label>
+                    <label><input type="radio" name="degree_confidence" value="Not very confident">Not very confident</label>
+                    <label><input type="radio" name="degree_confidence" value="Not confident at all">Not confident at all</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>J3. Miss classes due to stress/mental health:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="class_absence" value="Never">Never</label>
+                    <label><input type="radio" name="class_absence" value="Rarely (1-2 times per semester)">Rarely (1-2 times per semester)</label>
+                    <label><input type="radio" name="class_absence" value="Sometimes (3-5 times per semester)">Sometimes (3-5 times per semester)</label>
+                    <label><input type="radio" name="class_absence" value="Often (6-10 times per semester)">Often (6-10 times per semester)</label>
+                    <label><input type="radio" name="class_absence" value="Very often (more than 10 times per semester)">Very often (more than 10 times per semester)</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>J4. Overall physical health:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="physical_health" value="Excellent">Excellent</label>
+                    <label><input type="radio" name="physical_health" value="Very good">Very good</label>
+                    <label><input type="radio" name="physical_health" value="Good">Good</label>
+                    <label><input type="radio" name="physical_health" value="Fair">Fair</label>
+                    <label><input type="radio" name="physical_health" value="Poor">Poor</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>J5. Chronic health conditions: (Select all that apply)</strong></td>
+                <td>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="No chronic conditions">No chronic conditions</div>
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="Diabetes">Diabetes</div>
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="Heart problems">Heart problems</div>
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="Respiratory problems (asthma, etc.)">Respiratory problems (asthma, etc.)</div>
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="Digestive problems">Digestive problems</div>
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="Neurological problems">Neurological problems</div>
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="Other chronic condition">Other chronic condition</div>
+                        <div class="checkbox-item"><input type="checkbox" name="chronic_conditions[]" value="Prefer not to say">Prefer not to say</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>J6. Family mental health history:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="family_mental_health" value="Yes, depression">Yes, depression</label>
+                    <label><input type="radio" name="family_mental_health" value="Yes, anxiety">Yes, anxiety</label>
+                    <label><input type="radio" name="family_mental_health" value="Yes, other mental health condition">Yes, other mental health condition</label>
+                    <label><input type="radio" name="family_mental_health" value="No, none that I know of">No, none that I know of</label>
+                    <label><input type="radio" name="family_mental_health" value="Prefer not to say">Prefer not to say</label>
+                    <label><input type="radio" name="family_mental_health" value="Don't know">Don't know</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION K: TECHNOLOGY & SOCIAL MEDIA -->
+    <div class="section" role="region" aria-labelledby="section-k-title">
+        <h2 id="section-k-title" class="section-title">SECTION K: TECHNOLOGY & SOCIAL MEDIA</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>K1. Hours per day on social media:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="social_media_hours" value="Less than 1 hour">Less than 1 hour</label>
+                    <label><input type="radio" name="social_media_hours" value="1-2 hours">1-2 hours</label>
+                    <label><input type="radio" name="social_media_hours" value="3-4 hours">3-4 hours</label>
+                    <label><input type="radio" name="social_media_hours" value="5-6 hours">5-6 hours</label>
+                    <label><input type="radio" name="social_media_hours" value="More than 6 hours">More than 6 hours</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>K2. Social media makes you feel worse about yourself:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="social_media_negative" value="Never">Never</label>
+                    <label><input type="radio" name="social_media_negative" value="Rarely">Rarely</label>
+                    <label><input type="radio" name="social_media_negative" value="Sometimes">Sometimes</label>
+                    <label><input type="radio" name="social_media_negative" value="Often">Often</label>
+                    <label><input type="radio" name="social_media_negative" value="Always">Always</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>K3. Hours per day on phone/computer (non-academic):</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="screen_time" value="Less than 2 hours">Less than 2 hours</label>
+                    <label><input type="radio" name="screen_time" value="2-4 hours">2-4 hours</label>
+                    <label><input type="radio" name="screen_time" value="5-7 hours">5-7 hours</label>
+                    <label><input type="radio" name="screen_time" value="8-10 hours">8-10 hours</label>
+                    <label><input type="radio" name="screen_time" value="More than 10 hours">More than 10 hours</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>K4. Anxiety when cannot access phone/internet:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="digital_anxiety" value="Never">Never</label>
+                    <label><input type="radio" name="digital_anxiety" value="Rarely">Rarely</label>
+                    <label><input type="radio" name="digital_anxiety" value="Sometimes">Sometimes</label>
+                    <label><input type="radio" name="digital_anxiety" value="Often">Often</label>
+                    <label><input type="radio" name="digital_anxiety" value="Always">Always</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION L: LIFESTYLE & RISK FACTORS -->
+    <div class="section" role="region" aria-labelledby="section-l-title">
+        <h2 id="section-l-title" class="section-title">SECTION L: LIFESTYLE & RISK FACTORS</h2>
+        
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>L1. Substances used to cope with stress: (Select all that apply)</strong></td>
+                <td>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" name="substances[]" value="None">None</div>
+                        <div class="checkbox-item"><input type="checkbox" name="substances[]" value="Caffeine (more than normal)">Caffeine (more than normal)</div>
+                        <div class="checkbox-item"><input type="checkbox" name="substances[]" value="Energy drinks regularly">Energy drinks regularly</div>
+                        <div class="checkbox-item"><input type="checkbox" name="substances[]" value="Other (prefer not to specify)">Other (prefer not to specify)</div>
+                        <div class="checkbox-item"><input type="checkbox" name="substances[]" value="Prefer not to answer">Prefer not to answer</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>L2. Eat regular, balanced meals:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="eating_regularity" value="Always (3 regular meals daily)">Always (3 regular meals daily)</label>
+                    <label><input type="radio" name="eating_regularity" value="Often (most days)">Often (most days)</label>
+                    <label><input type="radio" name="eating_regularity" value="Sometimes (few days per week)">Sometimes (few days per week)</label>
+                    <label><input type="radio" name="eating_regularity" value="Rarely (skip meals frequently)">Rarely (skip meals frequently)</label>
+                    <label><input type="radio" name="eating_regularity" value="Never (very irregular eating)">Never (very irregular eating)</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>L3. Engage in enjoyable activities (hobbies, sports, socializing):</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="enjoyable_activities" value="Daily">Daily</label>
+                    <label><input type="radio" name="enjoyable_activities" value="Few times per week">Few times per week</label>
+                    <label><input type="radio" name="enjoyable_activities" value="Once a week">Once a week</label>
+                    <label><input type="radio" name="enjoyable_activities" value="Few times per month">Few times per month</label>
+                    <label><input type="radio" name="enjoyable_activities" value="Rarely or never">Rarely or never</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>L4. Relationship with family:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="family_relationship" value="Very supportive and close">Very supportive and close</label>
+                    <label><input type="radio" name="family_relationship" value="Generally supportive">Generally supportive</label>
+                    <label><input type="radio" name="family_relationship" value="Mixed (some support, some conflict)">Mixed (some support, some conflict)</label>
+                    <label><input type="radio" name="family_relationship" value="Often conflicted or stressful">Often conflicted or stressful</label>
+                    <label><input type="radio" name="family_relationship" value="Very distant or problematic">Very distant or problematic</label>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td style="width: 30%;"><strong>L5. Close friends at university:</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="close_friends" value="5 or more close friends">5 or more close friends</label>
+                    <label><input type="radio" name="close_friends" value="3-4 close friends">3-4 close friends</label>
+                    <label><input type="radio" name="close_friends" value="1-2 close friends">1-2 close friends</label>
+                    <label><input type="radio" name="close_friends" value="No close friends but some acquaintances">No close friends but some acquaintances</label>
+                    <label><input type="radio" name="close_friends" value="No close friends or acquaintances">No close friends or acquaintances</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION M: OPTIONAL SUPPORT SERVICES -->
+    <div class="section optional-section" role="region" aria-labelledby="section-m-title">
+        <h2 id="section-m-title" class="section-title">SECTION M: OPTIONAL SUPPORT SERVICES</h2>
+        
+        <div class="crisis-notice">
+            <strong>Important:</strong> This section is COMPLETELY OPTIONAL. If you would like our Society for Mental Welfare to help you directly, you may provide contact information. This will be kept separate from your survey responses.
+        </div>
+        
+        <table>
+            <tr>
+                <td style="width: 35%;"><strong>M1. Would you like to be contacted by our Society for Mental Welfare for support services?</strong></td>
+                <td class="inline-options">
+                    <label><input type="radio" name="contact_request" value="Yes, I would like information about support services">Yes, I would like information about support services</label>
+                    <label><input type="radio" name="contact_request" value="Yes, I would like to be contacted for counseling referral">Yes, I would like to be contacted for counseling referral</label>
+                    <label><input type="radio" name="contact_request" value="Yes, I would like to join peer support groups">Yes, I would like to join peer support groups</label>
+                    <label><input type="radio" name="contact_request" value="No, I prefer to remain completely anonymous">No, I prefer to remain completely anonymous</label>
+                </td>
+            </tr>
+        </table>
+
+        <div id="contact_details" style="display: none;">
+            <table>
+                <tr>
+                    <td style="width: 25%;"><strong>M2. Contact Information (OPTIONAL):</strong></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="email" name="contact_email" placeholder="your.email@uaf.edu.pk" style="width: 250px;"></td>
+                </tr>
+                <tr>
+                    <td>Phone/WhatsApp:</td>
+                    <td><input type="tel" name="contact_phone" placeholder="+92 3XX XXXXXXX" style="width: 200px;"></td>
+                </tr>
+                <tr>
+                    <td>Preferred contact method:</td>
+                    <td class="inline-options">
+                        <label><input type="radio" name="contact_method" value="Email">Email</label>
+                        <label><input type="radio" name="contact_method" value="Phone call">Phone call</label>
+                        <label><input type="radio" name="contact_method" value="WhatsApp message">WhatsApp message</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Best time to contact:</td>
+                    <td class="inline-options">
+                        <label><input type="radio" name="contact_time" value="Morning (8am-12pm)">Morning (8am-12pm)</label>
+                        <label><input type="radio" name="contact_time" value="Afternoon (12pm-6pm)">Afternoon (12pm-6pm)</label>
+                        <label><input type="radio" name="contact_time" value="Evening (6pm-10pm)">Evening (6pm-10pm)</label>
+                    </td>
+                </tr>
+            </table>
+            <small><em>Note: This information will be kept separate from your survey responses and only used by our mental health support team to connect you with appropriate resources.</em></small>
+        </div>
+    </div>
+
+    <!-- SECTION I: ADDITIONAL COMMENTS -->
+    <div class="section" role="region" aria-labelledby="section-i-title">
+        <h2 id="section-i-title" class="section-title">SECTION I: ADDITIONAL COMMENTS</h2>
+        
+        <table>
+            <tr>
+                <td><strong>I1. Is there anything specific about mental health support that you feel is missing at UAF?</strong></td>
+            </tr>
+            <tr>
+                <td><textarea name="missing_support" placeholder="Share your thoughts on what additional support services would be helpful at UAF..." rows="4"></textarea></td>
+            </tr>
+            <tr>
+                <td><strong>I2. Any additional comments or suggestions for improving student mental health and well-being at UAF:</strong></td>
+            </tr>
+            <tr>
+                <td><textarea name="additional_comments" placeholder="Any other feedback to help us improve student mental health support..." rows="4"></textarea></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- CRISIS RESOURCES -->
+    <div class="crisis-notice">
+        <strong>If you are currently experiencing mental health difficulties and need immediate support:</strong><br><br>
+        <strong>Society For Mental Welfare (UAF):</strong> +92 317-6288859<br>
+        <strong>National Youth Helpline (Toll-Free By HEC):</strong> 0800-69457<br>
+        <strong>Emergency:</strong> 1122<br><br>
+        <strong>For more information about the Society for Mental Welfare:</strong><br>
+        Email: smwuaf@gmail.com<br>
+        Phone: +92 317-6288859
+    </div>
+
+    <!-- SUBMIT SECTION -->
+    <div class="submit-section">
+        <button type="submit" class="submit-btn" id="submit-btn">Submit Survey</button>
+        <p style="margin-top: 10px; font-size: 12px; color: #666;">Your responses are anonymous and confidential</p>
+    </div>
+	<div class="footer">
+		<p>University of Agriculture, Faisalabad | Society for Mental Welfare</p>
+    </div>
+	
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Record start time
+            const startTime = new Date();
+            document.getElementById('start_time').value = startTime.toISOString();
+            document.getElementById('submission_timestamp').value = startTime.toISOString();
+
+            // Get user IP address
+			/*
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('user_ip').value = data.ip;
+                })
+                .catch(() => {
+                    document.getElementById('user_ip').value = 'unknown';
+                });
+				*/
+
+            // Update time taken every second
+            const timeInterval = setInterval(updateTimeTaken, 1000);
+
+            function updateTimeTaken() {
+                const currentTime = new Date();
+                const timeTaken = Math.floor((currentTime - startTime) / 1000); // in seconds
+                document.getElementById('time_taken_seconds').value = timeTaken;
+                document.getElementById('end_time').value = currentTime.toISOString();
+            }
+
+            // Progress tracking
+            const sections = document.querySelectorAll('.section');
+            const progressBar = document.getElementById('survey-progress');
+            const progressText = document.getElementById('progress-text');
+            
+            function updateProgress() {
+                const scrollPosition = window.scrollY + window.innerHeight / 2;
+                let currentSection = 0;
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        currentSection = index + 1;
+                    }
+                });
+                
+                const progress = (currentSection / sections.length) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `Section ${currentSection} of ${sections.length}`;
+            }
+            
+            window.addEventListener('scroll', updateProgress);
+            updateProgress(); // Initial call
+            
+            // Consent recording
+            const consentCheckbox = document.getElementById('consent');
+            consentCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    document.getElementById('consent_given').value = 'Yes';
+                    document.getElementById('consent_timestamp').value = new Date().toISOString();
+                } else {
+                    document.getElementById('consent_given').value = 'No';
+                    document.getElementById('consent_timestamp').value = '';
+                }
+            });
+            
+            // Conditional field visibility
+            const facultySelect = document.getElementById('faculty');
+            const facultyOther = document.getElementById('faculty_other');
+            
+            facultySelect.addEventListener('change', function() {
+                if (this.value === 'Other') {
+                    facultyOther.style.display = 'inline-block';
+                    facultyOther.required = true;
+                } else {
+                    facultyOther.style.display = 'none';
+                    facultyOther.required = false;
+                    facultyOther.value = '';
+                }
+            });
+            
+            // Language other field
+            const languageRadios = document.querySelectorAll('input[name="preferred_language"]');
+            const languageOther = document.getElementById('language_other');
+            
+            languageRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'Other') {
+                        languageOther.style.display = 'block';
+                        languageOther.querySelector('input').required = true;
+                    } else {
+                        languageOther.style.display = 'none';
+                        languageOther.querySelector('input').required = false;
+                        languageOther.querySelector('input').value = '';
+                    }
+                });
+            });
+            
+            // Coping methods other field
+            const copingOtherCheckbox = document.querySelector('input[name="coping_methods[]"][value="Other"]');
+            const copingOtherField = document.getElementById('coping_other');
+            
+            if (copingOtherCheckbox) {
+                copingOtherCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        copingOtherField.style.display = 'block';
+                        copingOtherField.querySelector('input').required = true;
+                    } else {
+                        copingOtherField.style.display = 'none';
+                        copingOtherField.querySelector('input').required = false;
+                        copingOtherField.querySelector('input').value = '';
+                    }
+                });
+            }
+            
+            // Contact details visibility
+            const contactRadios = document.querySelectorAll('input[name="contact_request"]');
+            const contactDetails = document.getElementById('contact_details');
+            
+            contactRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value !== 'No, I prefer to remain completely anonymous') {
+                        contactDetails.style.display = 'block';
+                    } else {
+                        contactDetails.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Crisis detection for PHQ-9 item 9
+            const phq9Radios = document.querySelectorAll('input[name="phq9"]');
+            const crisisResources = document.getElementById('crisis-resources');
+            
+            phq9Radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value !== '0 - Not at all') {
+                        crisisResources.style.display = 'block';
+                    } else {
+                        crisisResources.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Checkbox selection limits
+            function limitCheckboxes(name, maxSelections) {
+                const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+                
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
+                        
+                        if (checked.length > maxSelections) {
+                            this.checked = false;
+                            alert(`Please select only ${maxSelections} options.`);
+                        }
+                    });
+                });
+            }
+            
+            // Apply limits to specific sections
+            limitCheckboxes('stressors[]', 3);
+            limitCheckboxes('support_types[]', 2);
+            /*
+            // Duplicate prevention
+            function checkPreviousSubmission() {
+                const lastSubmission = localStorage.getItem('survey_last_submission');
+                if (lastSubmission) {
+                    const lastTime = new Date(lastSubmission).getTime();
+                    const currentTime = new Date().getTime();
+                    const hoursSinceLast = (currentTime - lastTime) / (1000 * 60 * 60);
+                    
+                    if (hoursSinceLast < 24) {
+                        if (!confirm('It looks like you may have already completed this survey recently. Are you sure you want to submit again?')) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+			*/
+			function checkPreviousSubmission() {
+			return true; // always allow
+			}
+
+            
+            // Form validation
+            const form = document.getElementById('mental-health-survey');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            form.addEventListener('submit', function(event) {
+                // Final time update
+                updateTimeTaken();
+                clearInterval(timeInterval);
+                
+                let isValid = true;
+                
+                // Clear previous error messages
+                document.querySelectorAll('.error-message').forEach(msg => {
+                    msg.style.display = 'none';
+                });
+                
+                // Validate consent
+                if (!document.getElementById('consent').checked) {
+                    alert('Please provide your consent to participate in the survey.');
+                    event.preventDefault();
+                    return;
+                }
+                
+                // Check for duplicate submission
+                if (!checkPreviousSubmission()) {
+                    event.preventDefault();
+                    return;
+                }
+                
+                // Validate required fields
+                const requiredFields = form.querySelectorAll('[required]');
+                requiredFields.forEach(field => {
+                    if (!field.value && field.type !== 'checkbox') {
+                        isValid = false;
+                        const errorMsg = document.getElementById(`${field.id || field.name}-error`);
+                        if (errorMsg) {
+                            errorMsg.style.display = 'block';
+                        }
+                    }
+                });
+                
+                // Validate checkbox selections
+                const stressors = document.querySelectorAll('input[name="stressors[]"]:checked');
+                if (stressors.length !== 3) {
+                    isValid = false;
+                    document.getElementById('stressors-error').style.display = 'block';
+                }
+                
+                const supportTypes = document.querySelectorAll('input[name="support_types[]"]:checked');
+                if (supportTypes.length !== 2) {
+                    isValid = false;
+                    document.getElementById('support-types-error').style.display = 'block';
+                }
+                
+                if (!isValid) {
+                    event.preventDefault();
+                    // Scroll to first error
+                    const firstError = document.querySelector('.error-message[style*="block"]');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    return;
+                }
+                
+                // Check for high-risk responses that need immediate attention
+                const phq9 = document.querySelector('input[name="phq9"]:checked');
+                if (phq9 && phq9.value !== '0 - Not at all') {
+                    if (confirm('Based on your responses, we recommend speaking with a mental health professional immediately. Would you like us to provide you with crisis resources?')) {
+                        crisisResources.style.display = 'block';
+                        crisisResources.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                
+                // Record submission in localStorage
+                localStorage.setItem('survey_last_submission', new Date().toISOString());
+                
+                // Disable submit button to prevent double submission
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+                
+                // Form will submit to Google Sheets via the form action
+            });
+        });
+    </script>
+</body>
+</html>
